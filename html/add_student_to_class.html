@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Student to Class</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("addStudentForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                let formData = new FormData(this);
+
+                fetch('../php/manage_student_classes.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.status === "success") {
+                        document.getElementById("addStudentForm").reset();
+                    }
+                })
+                .catch(error => console.error("Error adding student to class:", error));
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Add Student to Class</h2>
+    <form id="addStudentForm">
+        <label for="student_id">Student ID:</label>
+        <input type="number" name="student_id" id="student_id" required><br>
+
+        <label for="class_id">Class ID:</label>
+        <input type="number" name="class_id" id="class_id" required><br>
+
+        <button type="submit">Add Student to Class</button>
+    </form>
+</body>
+</html>

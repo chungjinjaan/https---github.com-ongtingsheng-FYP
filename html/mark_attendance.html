@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Attendance</title>
+    <script>
+        function captureAndSubmit() {
+            let video = document.getElementById('video');
+            let canvas = document.createElement('canvas');
+            let context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const faceImage = "data:image/png;base64,...";  // Example captured image
+const classId = 1;  // Replace with the actual class ID
+
+fetch("../php/mark_attendance.php", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        face_image: faceImage,
+        class_id: classId
+    })
+})
+.then(response => response.text())
+.then(data => console.log(data))
+.catch(error => console.error("Error:", error));
+        }
+
+        function startCamera() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    document.getElementById('video').srcObject = stream;
+                })
+                .catch(err => console.error("Camera access denied:", err));
+        }
+    </script>
+</head>
+<body onload="startCamera()">
+    <h2>Mark Attendance</h2>
+    <label for="class_id">Enter Class ID:</label>
+    <input type="text" id="class_id" name="class_id">
+    <br><br>
+    
+    <video id="video" autoplay></video>
+    <br><br>
+    
+    <button onclick="captureAndSubmit()">Take Attendance</button>
+</body>
+</html>

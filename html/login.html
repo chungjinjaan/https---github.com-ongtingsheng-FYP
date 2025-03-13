@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Attendance</title>
+</head>
+<body>
+    <h2>Take Attendance</h2>
+
+    <form action="../php/login.php" method="POST">
+        <label for="student_id">Select Student:</label>
+        <select name="student_id" id="student_id" required>
+            <option value="1">Student 1</option>
+            <option value="2">Student 2</option>
+            <option value="3">Student 3</option>
+        </select>
+        <br><br>
+
+        <label for="class_id">Select Class:</label>
+        <select name="class_id" id="class_id" required>
+            <option value="101">Math</option>
+            <option value="102">Science</option>
+            <option value="103">History</option>
+        </select>
+        <br><br>
+
+        <button type="submit">Mark Attendance</button>
+    </form>
+
+</body>
+</html>
